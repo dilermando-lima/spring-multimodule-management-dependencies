@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+ 
+    <groupId>example.spring.api</groupId>
+    <artifactId>api-spring-example</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+ 
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.target>21</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+ 
+        <!-- Declarando a versão das dependencias core -->
+        <core-spring-dependencies.version>1.0.0-SNAPSHOT</core-spring-dependencies.version>
+   </properties>
+ 
+   <dependencies>
+        <!-- importando o módulo de api-basic -->
+        <dependency>
+            <groupId>example.spring.core</groupId>
+            <artifactId>core-module-spring-api-basic</artifactId>
+        </dependency>
+    
+        <!-- importando o módulo de api-test -->
+        <dependency>
+            <groupId>example.spring.core</groupId>
+            <artifactId>core-module-spring-api-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+ 
+        <!-- importando o módulo de conexão com o banco oracle -->
+        <dependency>
+            <groupId>example.spring.core</groupId>
+            <artifactId>core-module-spring-oracle</artifactId>
+        </dependency>
+ 
+   </dependencies>
+ 
+    <dependencyManagement>
+        <dependencies>
+           <dependency>
+                <groupId>example.spring.core</groupId>
+                <artifactId>core-spring-dependencies</artifactId>
+                <version>${core-spring-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+ 
+    <build>
+ 
+        <!-- plugin to build spring boot applications -->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <!-- repackage is required when using spring core dependencies -->
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+ 
+        <!-- plugin to identity junit 5 on tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+ 
+        <!-- plugin to run test coverage analysis -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.8.12</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/Application*</exclude>
+                        <exclude>**/exception/**/</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+ 
+    </build>
+   
+    <!-- 
+    <distributionManagement>
+        <repository>
+            <id>central</id>
+            <url>https://artefatos.projetA.com.br:443/artifactory/libs-release</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>https://artefatos.projetA.com.br:443/artifactory/libs-snapshot</url>
+        </snapshotRepository>
+    </distributionManagement> 
+    -->
+   
+</project>

@@ -1,0 +1,7 @@
+example.spring.core.apibasic.BootstrapProperties
+example.spring.core.apibasic.ExceptionRest
+example.spring.core.apibasic.ExceptionRestProperties
+example.spring.core.apibasic.PropertyPlaceholderAutoConfigurationDefault
+example.spring.core.apibasic.InfoEndpoint
+
+
